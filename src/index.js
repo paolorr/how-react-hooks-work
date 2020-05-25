@@ -1,1 +1,13 @@
-import './react-hooks-6';
+import './react-hooks-5';
+
+//if importing example 6, comment all lines below
+import { createElement, render } from './utils';
+const React = (function () {
+	return {
+		createElement,
+		render: render(),
+	};
+})();
+
+const rootElement = document.getElementById('root');
+React.render(<h1>Check console!</h1>, rootElement);
