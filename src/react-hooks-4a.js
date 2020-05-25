@@ -1,20 +1,22 @@
 //multiple states
 const React = (function () {
-	let hooks = [];
-	let idx = 0;
-	function useState(initVal) {
-		const state = hooks[idx] || initVal;
-		//setState is called asynchronously, so it we have freeze the index
-		const _idx = idx;
-		const setState = (newVal) => {
-			hooks[_idx] = newVal;
+	const states = [];
+	let calls = -1;
+	function useState(defaultValue) {
+		const callId = ++calls;
+		if (states[callId]) {
+			return states[callId];
+		}
+		const setValue = (newValue) => {
+			states[callId][0] = newValue;
 		};
-		idx++;
-		return [state, setState];
+		const tuple = [defaultValue, setValue];
+		states[callId] = tuple;
+		return tuple;
 	}
 
 	function render(Component) {
-		idx = 0;
+		calls = 0;
 		const C = Component();
 		C.render();
 		return C;
@@ -23,7 +25,7 @@ const React = (function () {
 	return {
 		useState,
 		render,
-		getStates: () => hooks,
+		getStates: () => states,
 	};
 })();
 

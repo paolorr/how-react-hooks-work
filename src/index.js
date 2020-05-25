@@ -1,4 +1,4 @@
-import './react-hooks-5';
+import './react-hooks-4a';
 
 //if importing example 6, comment all lines below
 import { createElement, render } from './utils';
